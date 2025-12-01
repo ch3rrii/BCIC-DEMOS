@@ -57,6 +57,7 @@ Questions to ponder:
 Step 2 – Make the button respond to clicks
 Key idea: Use the command parameter to attach a callback function that runs when the button is clicked.
 
+####################################################################
 import tkinter as tk
 
 
@@ -88,30 +89,26 @@ if __name__ == "__main__":
 	main()
 
 
+####################################################################
 
-
-
-Notice:
-command=on_button_click wires the button to the function.
+Notice: command=on_button_click wires the button to the function.
 Questions to ponder:
-“What if we want the button to change its own text instead of a label?”
-“Could we reuse the same handler for multiple buttons with different messages?”
+ - “What if we want the button to change its own text instead of a label?”
+ - “Could we reuse the same handler for multiple buttons with different messages?”
 
 
 Key takeaways: When the user clicks, Tkinter calls on_button_click automatically.
 message_label.config(...) updates the label text on the screen, giving immediate feedback.
 
 
-
 Step 3 – Moving button that stops when clicked
 Key ideas:
-Use place instead of pack so you can control x/y coordinates.
-This version uses a class and __init__/self to keep all the GUI state and behavior bundled together like a tiny “game object.” That makes the code easier to grow (more buttons, more logic) without turning into a pile of globals.
-Use root.after(delay_ms, func) to make a “soft game loop” that moves the button every few milliseconds.
+ - Use place instead of pack so you can control x/y coordinates.
+ - This version uses a class and __init__/self to keep all the GUI state and behavior bundled together like a tiny “game object.” That makes the code easier to grow (more buttons, more logic) without turning into a pile of globals.
+ - Use root.after(delay_ms, func) to make a “soft game loop” that moves the button every few milliseconds.
+ - Use a shared flag (e.g., is_moving) to start/stop movement from the click handler.
 
-
-Use a shared flag (e.g., is_moving) to start/stop movement from the click handler.
-
+####################################################################
 import tkinter as tk
 
 
@@ -183,25 +180,23 @@ def main():
 if __name__ == "__main__":
 	main()
 
-
-
+####################################################################
 
 
 Concepts to emphasize:
-The button is stored as self.move_button, and the “world state” is stored as self.button_x, self.is_moving. This is a classic game-loop structure, just with Tkinter.
+ - The button is stored as self.move_button, and the “world state” is stored as self.button_x, self.is_moving. This is a classic game-loop structure, just with Tkinter.
 on_button_click controls state, not position directly, which keeps logic clean and testable.
+
 Examples:
-“Think of after as a reminder: ‘in 30 milliseconds, run animate again’.”
-
-
-“The button is like a character in a game with position and speed.” animate calls itself via self.root.after(30, self.animate) instead of using while True, which would freeze the GUI.
+ - “Think of after as a reminder: ‘in 30 milliseconds, run animate again’.”
+ -  “The button is like a character in a game with position and speed.” animate calls itself via self.root.after(30, self.animate) instead of using while True, which would freeze the GUI.
 
 Why use a class, init, and self?
 Class:
 class MovingButtonApp: defines a new “type of thing” that knows how to:
-store the window and button state,
-update the animation,
-react when the button is clicked.
+ - store the window and button state,
+ - update the animation,
+ - react when the button is clicked.
 It’s like making your own custom object called “app” instead of scattering variables and functions everywhere.
 
 
@@ -209,11 +204,11 @@ __init__:
 def __init__(self, root: tk.Tk) -> None: is the constructor.
 It runs automatically when you create the app: app = MovingButtonApp(root).
 This is where you set up:
-the window title and size,
-the label,
-the button,
-the starting animation state,
-and then start the animation loop.
+ - the window title and size,
+ - the label,
+ - the button,
+ - the starting animation state,
+ - and then start the animation loop.
 
 
 self:
@@ -223,23 +218,21 @@ That’s how animate and on_button_click share and update the same state without
 
 Why this design is “elegant” 
 Single responsibility:
-animate only handles movement and scheduling.
-on_button_click only handles what happens when clicked.
+ - animate only handles movement and scheduling.
+ - on_button_click only handles what happens when clicked.
 Clear state:
-All motion-related state lives in instance attributes (self.button_x, self.is_moving), not globals.
-Progressive complexity:
-Start with a trivial button → reactive button → animated, stateful object.
-
-
-Mirrors patterns they’ll see in real GUI and game code.
+ - All motion-related state lives in instance attributes (self.button_x, self.is_moving), not globals.
+ - Progressive complexity:
+	 - Start with a trivial button → reactive button → animated, stateful object.
+ - Mirrors patterns they’ll see in real GUI and game code.
 
 
 
 Make it your own: Play around. Break the code. Fix the code. Make it your own. 
-Change speed via a slider or extra “Faster/Slower” buttons to reinforce the idea of state.
-Change the colors, x/y coordinates. 
-Change direction when the button hits a wall instead of wrapping, to introduce simple collision logic.
-Add a “score” label that counts how many times they stop/restart the button, tying in variables and arithmetic.
+ - Change speed via a slider or extra “Faster/Slower” buttons to reinforce the idea of state.
+ - Change the colors, x/y coordinates. 
+ - Change direction when the button hits a wall instead of wrapping, to introduce simple collision logic.
+ - Add a “score” label that counts how many times they stop/restart the button, tying in variables and arithmetic.
 
 
 
