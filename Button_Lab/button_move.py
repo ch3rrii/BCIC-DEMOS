@@ -60,26 +60,10 @@ class MovingButtonApp:
         if self.is_moving:
             self.is_moving = False
             self.info_label.config(text="Nice! You stopped the button.")
-            #visual feedback 
-            self.move_button.config(
-                text ="Clicked!!!",
-                bg = "pink", #background color
-                fg = "red", #text color
-            )
-            self.root.config(bg="light pink")
-            self.button_speed +=3
-            print("This is the speed now: " + str(self.button_speed))
         else:
             # Optional: let students “restart” the movement
             self.is_moving = True
             self.info_label.config(text="Moving again – try to stop it!")
-            # Visual feedback when starting again
-            self.move_button.config(
-                text="Catch me",
-                bg="SystemButtonFace",  # default look on Windows; adjust as needed
-                fg="black",
-            )
-            self.root.config(bg="SystemButtonFace")
 
 def main():
     root = tk.Tk()
@@ -89,3 +73,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
